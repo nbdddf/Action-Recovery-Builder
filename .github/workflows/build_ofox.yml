@@ -94,7 +94,6 @@ jobs:
         cd ${{ env.WORKSPACE }}
         sudo apt update && sudo apt upgrade -y
         DEBIAN_FRONTEND=noninteractive sudo apt install -yq \
-            linux-modules-extra-$(uname -r) \
             git python3 tar aria2 jq
         git clone https://gitlab.com/OrangeFox/misc/scripts.git
         cd scripts
