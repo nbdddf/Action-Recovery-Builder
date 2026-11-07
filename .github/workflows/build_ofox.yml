@@ -145,18 +145,19 @@ jobs:
         cd ${{ env.WORKSPACE }}/fox_${{ env.MANIFEST_BRANCH }}/out/target/product/${{ env.DEVICE_NAME }}
         echo "=== 查看实际生成的文件名 ==="
         ls -l
-        # 自动匹配并重命名 .img.tar
-        if ls OrangeFox-*.img.tar 1> /dev/null 2>&1; then
-          mv OrangeFox-*.img.tar OrangeFox-${{ env.OFOX_VERSION }}-${{ env.DEVICE_NAME }}.tar
-        fi
+        # 之前替换空格的代码保留着，以防万一
+        for f in *\ *; do
+          if [ -f "$f" ]; then
+            newname=$(echo "$f" | tr ' ' '_')
+            mv "$f" "$newname"
+          fi
+        done
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v3
       with:
         files: |
-          ${{ env.WORKSPACE }}/fox_${{ env.MANIFEST_BRANCH }}/out/target/product/${{ env.DEVICE_NAME }}/OrangeFox-*.img
-          ${{ env.WORKSPACE }}/fox_${{ env.MANIFEST_BRANCH }}/out/target/product/${{ env.DEVICE_NAME }}/OrangeFox-*.zip
-          ${{ env.WORKSPACE }}/fox_${{ env.MANIFEST_BRANCH }}/out/target/product/${{ env.DEVICE_NAME }}/OrangeFox-*.tar
+          ${{ env.WORKSPACE }}/fox_${{ env.MANIFEST_BRANCH }}/out/target/product/${{ env.DEVICE_NAME }}/OrangeFox-*
         name: ofox-${{ env.DEVICE_NAME }}-${{ env.DATE_SHORT }}
         tag_name: ${{ env.DATE_TAG }}
         body: |
