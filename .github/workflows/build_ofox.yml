@@ -157,7 +157,7 @@ jobs:
       uses: softprops/action-gh-release@v3
       with:
         files: |
-          ${{ env.WORKSPACE }}/fox_${{ env.MANIFEST_BRANCH }}/out/target/product/${{ env.DEVICE_NAME }}/OrangeFox-*
+          ${{ env.WORKSPACE }}/fox_${{ env.MANIFEST_BRANCH }}/out/target/product/${{ env.DEVICE_NAME }}/OrangeFox-*.zip
         name: ofox-${{ env.DEVICE_NAME }}-${{ env.DATE_SHORT }}
         tag_name: ${{ env.DATE_TAG }}
         body: |
